@@ -1,0 +1,26 @@
+let posts = vec![
+        PostToShow {
+            title: "First Blog Post".to_owned(),
+            date: "June 1, 2023".to_owned(),
+            preview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor enim id lectus volutpat, vitae sollicitudin nisl tempor.".to_owned(),
+            img_path: "/images/dogs.jpg".to_owned()
+        },
+        PostToShow {
+            title: "Second Blog Post".to_owned(),
+            date: "June 5, 2023".to_owned(),
+            preview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor enim id lectus volutpat, vitae sollicitudin nisl tempor.".to_owned(),
+            img_path: "/images/farm.jpg".to_owned()
+        },
+        PostToShow {
+            title: "Third Blog Post".to_owned(),
+            date: "June 10, 2023".to_owned(),
+            preview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor enim id lectus volutpat, vitae sollicitudin nisl tempor.".to_owned(),
+            img_path: "/images/space.jpg".to_owned()
+        },
+        PostToShow {
+            title: "First Blog Post".to_owned(),
+            date: "June 1, 2023".to_owned(),
+            preview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor enim id lectus volutpat, vitae sollicitudin nisl tempor.".to_owned(),
+            img_path: "/images/dogs.jpg".to_owned()
+        }
+    ];
