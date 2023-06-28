@@ -13,6 +13,7 @@ struct PostToShow {
     img_path: String,
 }
 
+#[derive(FromRow)]
 struct DatabasePost {
     id: i32,
     title: String,
@@ -21,17 +22,6 @@ struct DatabasePost {
     content: String,
 }
 
-impl FromRow<'_, sqlx::sqlite::SqliteRow> for DatabasePost {
-    fn from_row(row: &'_ sqlx::sqlite::SqliteRow) -> Result<Self, sqlx::Error> {
-        Ok(Self {
-            id: row.try_get("id")?,
-            title: row.try_get("title")?,
-            date: row.try_get("date")?,
-            image_ext: row.try_get("image_ext")?,
-            content: row.try_get("content")?,
-        })
-    }
-}
 
 pub async fn index(
     Extension(pool): Extension<SqlitePool>,

@@ -2,7 +2,7 @@ mod api;
 mod handlers;
 mod index;
 mod show_post;
-use api::{checkpass::checkpass, delete_post::delete_post, new_post::new_post};
+use api::{checkpass::checkpass, delete_post::delete_post, new_post::new_post, post_list::post_list};
 use axum::{
     body::Body,
     routing::{get, post},
@@ -56,6 +56,7 @@ pub async fn create_routes() -> Router<(), Body> {
         .route("/api/new_post", post(new_post))
         .route("/api/delete_post", post(delete_post))
         .route("/post", get(show_post))
+        .route("/api/post_list", post(post_list))
         .layer(Extension(Arc::new(tera)))
         .layer(Extension(pool))
 }
