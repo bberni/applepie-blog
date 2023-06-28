@@ -53,6 +53,7 @@ a {
   transition: 0.3s;
   color: #F5EFE7;
   overflow: hidden;
+  word-break: break-word;
 }
 
 /* .post:before {
@@ -75,7 +76,7 @@ a {
   margin-bottom: 5px;
 }
 
-.post .date {
+.date {
   font-style: italic;
 }
 
@@ -95,6 +96,13 @@ a {
   object-fit: cover;
 }
 
+.post-content {
+  padding: 20px; 
+  color: #213555; 
+  max-width: 50%;
+  margin: 0 auto;
+  line-break: normal;
+}
 @media only screen and (max-width: 1400px) {
 
   .preview {

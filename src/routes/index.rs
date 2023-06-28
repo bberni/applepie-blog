@@ -44,12 +44,18 @@ pub async fn index(
         .await
         .unwrap();
     let mut posts: Vec<PostToShow> = Vec::new();
+    let mut preview: String;
     for row in rows {
+        if row.content.len() < 101 {
+            preview = row.content[..row.content.len()].to_owned();
+        } else {
+            preview = row.content[..100].to_owned() + "...";
+        }
         posts.push(PostToShow {
             id: row.id,
             title: row.title,
             date: row.date,
-            preview: (row.content[..100].to_owned() + "..."),
+            preview: preview,
             img_path: format!("/images/{}.{}", row.id, row.image_ext),
         });
     }
