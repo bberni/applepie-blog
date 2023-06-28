@@ -1,27 +1,17 @@
 use axum::{extract::Query, response::Html, Extension};
 use::std::sync::Arc;
 use serde::{Deserialize, Serialize};
-use sqlx::{FromRow, Row, SqlitePool, sqlite::SqliteRow};
+use sqlx::{FromRow, SqlitePool};
 use tera::{Context, Tera};
 #[derive(Deserialize)]
 pub struct Id {
     id: i32,
 }
-#[derive(Serialize)]
+#[derive(Serialize, FromRow)]
 struct Post { 
     title: String, 
     date: String,
     content: String
-}
-
-impl FromRow<'_, SqliteRow> for Post {
-    fn from_row(row: &'_ SqliteRow) -> Result<Self, sqlx::Error> {
-        Ok(Self {
-            title: row.try_get("title")?,
-            date: row.try_get("date")?,
-            content: row.try_get("content")?,
-        })
-    }
 }
 
 

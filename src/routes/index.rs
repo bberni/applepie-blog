@@ -1,6 +1,6 @@
 use axum::{response::Html, Extension};
 use serde::Serialize;
-use sqlx::{FromRow, Row, SqlitePool};
+use sqlx::{FromRow, SqlitePool};
 use std::sync::Arc;
 use tera::{Context, Tera};
 
