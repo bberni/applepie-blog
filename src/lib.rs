@@ -5,8 +5,6 @@ use hex;
 use std::{env, process};
 
 pub async fn run() {
-    env::set_var("BLOG_SERVER_PORT", "3000");
-    env::set_var("BLOG_SERVER_PASSWORD", "asdf");
     match check_vars() {
         Ok(_) => (), 
         Err(why) => {
@@ -28,7 +26,6 @@ pub fn check_hash(hash: String) -> i32 {
     let mut hasher = Sha256::new();
     hasher.update(password);
     let result = hex::encode(hasher.finalize());
-    println!("{:?}", result);
     if result == hash {
         return 1;
     } else {

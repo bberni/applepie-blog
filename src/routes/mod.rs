@@ -40,6 +40,7 @@ pub async fn create_routes() -> Router<(), Body> {
             title TEXT,
             date TEXT,
             image_ext TEXT,
+            description TEXT,
             content TEXT
         )
     ";

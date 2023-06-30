@@ -3,13 +3,14 @@ use serde::Serialize;
 use sqlx::{FromRow, SqlitePool};
 use std::sync::Arc;
 use tera::{Context, Tera};
-
+use lazy_static::lazy_static;
+use regex::Regex;
 #[derive(Serialize)]
 struct PostToShow {
     id: i32,
     title: String,
     date: String,
-    preview: String,
+    description: String,
     img_path: String,
 }
 
@@ -19,33 +20,30 @@ struct DatabasePost {
     title: String,
     date: String,
     image_ext: String,
-    content: String,
+    description: String,
 }
 
 
 pub async fn index(
     Extension(pool): Extension<SqlitePool>,
     Extension(templates): Extension<Arc<Tera>>,
-) -> Html<String> {
+) -> Html<String> { 
+    lazy_static! {
+        static ref RE: Regex = Regex::new("<[^<]+?>").unwrap();
+    }
     let mut context = Context::new();
-    let query = "SELECT * FROM posts";
+    let query = "SELECT id, title, date, image_ext, description FROM posts";
     let rows = sqlx::query_as::<_, DatabasePost>(query)
         .fetch_all(&pool)
         .await
         .unwrap();
     let mut posts: Vec<PostToShow> = Vec::new();
-    let mut preview: String;
     for row in rows {
-        if row.content.len() < 101 {
-            preview = row.content[..row.content.len()].to_owned();
-        } else {
-            preview = row.content[..100].to_owned() + "...";
-        }
         posts.push(PostToShow {
             id: row.id,
             title: row.title,
             date: row.date,
-            preview: preview,
+            description: row.description,
             img_path: format!("/images/{}.{}", row.id, row.image_ext),
         });
     }

@@ -12,6 +12,7 @@ pub struct FromCMS {
     date: String,
     image: String,
     image_ext: String,
+    description: String,
     content: String,
 }
 
@@ -39,12 +40,13 @@ pub async fn new_post(
         return StatusCode::INTERNAL_SERVER_ERROR;
     }
     let insert_query = "
-        INSERT INTO posts (title, date, image_ext, content)
-        VALUES (?, ?, ?, ?)";   
+        INSERT INTO posts (title, date, image_ext, description, content)
+        VALUES (?, ?, ?, ?, ?)";   
     match sqlx::query(insert_query)
         .bind(params.title)
         .bind(params.date)
         .bind(&params.image_ext)
+        .bind(params.description)
         .bind(params.content)
         .execute(&pool)
         .await {
