@@ -13,6 +13,7 @@ pub struct FromCMS {
 
 #[derive(Serialize, FromRow)]
 struct Post {
+    id: i32,
     title: String,
     date: String,
 }
@@ -30,7 +31,7 @@ pub async fn post_list(
         return StatusCode::FORBIDDEN.into_response();
     };
 
-    let query = "SELECT title, date FROM posts";
+    let query = "SELECT id, title, date FROM posts";
     let rows = match sqlx::query_as::<_, Post>(query).fetch_all(&pool).await {
         Ok(posts) => posts,
         Err(_) => {

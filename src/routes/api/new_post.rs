@@ -38,26 +38,25 @@ pub async fn new_post(
     if !["jpg", "jpeg", "png", "bmp", "webp"].contains(&params.image_ext.as_str()){
         return StatusCode::INTERNAL_SERVER_ERROR;
     }
-    let id_query = "SELECT MAX(id) FROM posts"; 
-    let max_id = sqlx::query_scalar::<_, i32>(id_query)
-        .fetch_one(&pool)
-        .await.unwrap(); 
-    match save_image(params.image, max_id + 1, &params.image_ext) {
-        Err(_) => {return StatusCode::INTERNAL_SERVER_ERROR;}
-        _ => {}
-    }
-
     let insert_query = "
         INSERT INTO posts (title, date, image_ext, content)
         VALUES (?, ?, ?, ?)";   
     match sqlx::query(insert_query)
         .bind(params.title)
         .bind(params.date)
-        .bind(params.image_ext)
+        .bind(&params.image_ext)
         .bind(params.content)
         .execute(&pool)
         .await {
-            Ok(_) => {return StatusCode::OK},
+            Ok(_) => {},
             Err(_) => {return StatusCode::INTERNAL_SERVER_ERROR;}
         };
+        let id_query = "SELECT MAX(id) FROM posts"; 
+        let max_id = sqlx::query_scalar::<_, i32>(id_query)
+            .fetch_one(&pool)
+            .await.unwrap(); 
+        match save_image(params.image, max_id, &params.image_ext) {
+            Err(_) => {return StatusCode::INTERNAL_SERVER_ERROR;}
+            _ => {return StatusCode::OK}
+        }
 }

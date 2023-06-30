@@ -36,7 +36,7 @@ pub async fn create_routes() -> Router<(), Body> {
         .unwrap();
     let create_table_query = "
         CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
             date TEXT,
             image_ext TEXT,
